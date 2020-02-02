@@ -1,0 +1,17 @@
+using Botworx.Runtime
+
+predicate weight(float)
+
+class Foo()
+    def foo($x is foo) #forward chaining method
+        rule
+            $x has $y
+            $y is bar
+            -->
+            $y is foo
+    def bar($x is foo) #forward chaining method
+        rule
+            $x weight $y
+            $y is bar
+            -->
+            $y is foo

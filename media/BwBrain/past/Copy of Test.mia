@@ -1,0 +1,13 @@
+class Test():
+    def Foo1($x is foo): #forward chaining method
+        rule:
+            $x has $y
+            $y is bar
+            -->
+            $y is foo
+    def Bar1(? $x is bar): #backward chaining method
+        rule:
+            $x has $y
+            $y is foo
+            -->
+            return True

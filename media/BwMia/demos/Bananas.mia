@@ -1,0 +1,174 @@
+;
+; Monkey & Bananas
+;
+(domain Bananas ()
+	(method main ()
+		(rule
+			(topic ?g (type goal))
+			(not(?g is achieved))		
+			-->
+			(temporary (:agent achieve ?g))
+		)    
+	)
+	(method AllGoals (?g is achieved)
+		(rule
+			(?g type goal)
+			(topic ?g1 (type goal))
+			(?g1 is achieved)
+			-->
+			==>
+			halt
+		)
+	)
+	(method GotoApply (?a goto ?p1)
+		(rule
+			(?a container ?p2)
+			-->
+			(assert 
+				(?a container ?p2 -1) ;retract
+				(?a container ?p1) ; new place
+			)
+		)
+	)
+	(method GetPropose (:agent achieve ?g)
+        (rule
+        MONITOR
+            (?g action get)
+			(?g actor ?a)
+			(?g object ?o)
+            (?a contains ?o)
+            -->
+            (?g is achieved)
+            (destroy ?g)
+            ==>
+            return
+        )	
+		(rule
+        MONITOR
+            (?g action get)
+			(?g actor ?a)
+			(?g object ?o)
+			-->
+			(propose (?a get ?o))
+		)
+	)
+	(method GetApply (?a get ?o)
+		(rule
+			MONITOR
+			(?o container ?c)
+			(?c is locked)
+			-->
+			(propose (?a unlock ?c))
+			==>
+			return
+		)	
+		(rule
+			(?a container ?c1)
+			(?c1 type place)
+			(?o container ?c2)
+			(?c2 type place)
+			(?c1 <> ?c2)
+			-->
+			(propose (?a goto ?c2))
+			==>
+			return
+		)		
+		(rule
+			(?o container ?c)
+			-->
+			(assert 
+				(?o container ?c -1)
+                (?o container ?a)
+				(?a contains ?o) ; interesting ... holding object = containment?
+			)
+		)
+	)
+	(method UnlockPropose (:agent achieve ?g)
+		(rule
+            (?g action unlock)
+			(?g object ?o)
+			(not(?o is locked))
+			-->
+			(assert (?g is achieved))
+			(destroy ?g)
+			==>
+			return
+		)	
+		(rule
+        MONITOR
+            (?g action unlock)
+			(?g actor ?a)
+			(?g object ?o)
+			(?a container ?c1)
+			(?c1 type place)
+			(?o container ?c2)
+			(?c2 type place)
+			(?c1 = ?c2)
+			-->
+			(propose (?a unlock ?o))
+		)
+	)
+	(method UnlockApply (?a unlock ?o)
+		(rule
+			MONITOR
+			(topic ?k (type key))
+			(not(?a contains ?k))
+			-->
+			(propose (?a get ?k))
+			==>
+			return
+		)	
+		(rule
+			MONITOR
+			(?a container ?c1)
+			(?c1 type place)
+            (?o container ?c2)
+            (?c2 type place)
+			(?c1 <> ?c2)	
+			-->
+			(propose (?a goto ?c2))
+			==>
+			return
+		)		
+		(rule
+			(?o is locked)
+			-->
+			(retract (?o is locked))
+		)
+	)
+)
+(problem Bananas
+	(topic Place-1
+		(type place)
+	)
+	(topic Place-2
+		(type place)
+	)	
+	(topic Place-3
+		(type place)
+	)	
+	(topic Monkey-1
+		(type monkey)
+		(container Place-1)
+	)
+	(topic Chest-1
+		(type chest)
+		(container Place-2)
+		(is locked)
+	)
+	(topic Banana-1
+		(type banana)
+		(container Chest-1)
+	)		
+	(topic Key-1
+		(type key)
+		(container Place-3)
+	)	
+	(topic Goal-1
+		(type goal)
+		(action get)        
+		(actor Monkey-1)
+		(object Banana-1)
+	)
+	(topic (Monkey-1 get Banana-1))
+)

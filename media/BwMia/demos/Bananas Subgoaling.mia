@@ -1,0 +1,229 @@
+;
+; Monkey & Bananas with Subgoaling
+;
+(domain Bananas ()
+	(method main ()
+		(rule
+			(topic ?g (type goal))
+			(not(?g is suspended))
+			(not(?g is achieved))		
+			-->
+			(temporary (:agent achieve ?g))
+			==>
+			main
+		)    
+	)
+;
+; Goal Management
+;
+	(method NewGoalElab (:agent new-goal ?g)
+		(rule
+		MONITOR
+			(:agent new-goal ?g)
+			(:agent goal ?g1)
+			(?g <> ?g1)
+			-->           
+			(assert (?g1 depends-on ?g))			
+			(retract (:agent goal ?g1))            
+            -->
+            (retract (:agent goal ?g))            
+		)
+		(rule
+			(:agent new-goal ?g)
+			-->
+			(assert (:agent goal ?g))
+		)		
+	)
+	(method HasDependentElab (?a depends-on ?b)
+		(rule
+			(?a depends-on ?b)
+			-->
+			(assert (?b has-dependent ?a))
+		)
+	)
+	(method SuspendedElab (?a depends-on ?b)
+		(rule
+			(?a depends-on ?b)
+			(not(?b is achieved))
+			-->
+			(assert (?a is suspended))
+		)
+	)
+	(method NotSuspendedElab (?a is achieved)
+		(rule
+			MONITOR
+			(?a has-dependent ?b)
+			(?b is suspended)
+			-->
+			(retract (?b is suspended))
+            (retract(:agent goal ?a))
+            (:agent goal ?b)
+		)
+	)
+	(method AllGoals (?g is achieved)
+		(rule
+			(?g type goal)
+			(topic ?g1 (type goal))
+			(?g1 is achieved)
+			-->
+			==>
+			halt
+		)
+	)
+;
+;
+;
+	(method GotoApply (?a goto ?p1)
+		(rule
+			(?a container ?p2)
+			-->
+			(assert 
+				(?a container ?p2 -1) ;retract
+				(?a container ?p1) ; new place
+			)
+		)
+	)
+	(method GetPropose (:agent achieve ?g)
+        (rule
+			MONITOR
+            (?g action get)
+			(?g actor ?a)
+			(?g object ?o)
+            (?a contains ?o)
+            -->
+            (?g is achieved)
+            (destroy ?g)
+            ==>
+            return
+        )	
+		(rule
+			MONITOR
+            (?g action get)
+			(?g actor ?a)
+			(?g object ?o)
+			-->
+			(propose (?a get ?o))
+		)
+	)
+	(method GetApply (?a get ?o)
+		(rule
+			MONITOR		        
+			(?o container ?c)
+			(?c is locked)
+			-->
+            (create goal ?g (action get) (actor ?a) (object ?o))
+			(propose (?a unlock ?c) (:agent new-goal ?g))
+			==>
+			return
+		)	
+		(rule
+			(?a container ?c1)
+			(?c1 type place)
+			(?o container ?c2)
+			(?c2 type place)
+			(?c1 <> ?c2)
+			-->
+            (create goal ?g (action get) (actor ?a) (object ?o))
+			(propose (?a goto ?c2) (:agent new-goal ?g))			            
+			==>
+			return
+		)		
+		(rule
+			(?o container ?c)
+			-->
+			(assert 
+				(?o container ?c -1)
+                (?o container ?a)
+				(?a contains ?o) ; interesting ... holding object = containment?
+			)
+		)
+	)
+	(method UnlockPropose (:agent achieve ?g)
+		(rule
+        MONITOR        
+            (?g action unlock)
+			(?g object ?o)
+			(not(?o is locked))
+			-->
+			(assert (?g is achieved))
+			(destroy ?g)
+			==>
+			return
+		)	
+		(rule
+            (?g action unlock)
+			(?g actor ?a)
+			(?g object ?o)
+			-->
+			(propose (?a unlock ?o))
+		)
+	)
+	(method UnlockApply (?a unlock ?o)
+		(rule
+			MONITOR
+			(topic ?k (type key))
+			(not(?a contains ?k))
+			-->
+            (create goal ?g (action unlock) (actor ?a) (object ?o))
+			(propose (?a get ?k) (:agent new-goal ?g))
+			==>       
+			return
+		)	
+		(rule
+			MONITOR
+			(?a container ?c1)
+			(?c1 type place)
+            (?o container ?c2)
+            (?c2 type place)
+			(?c1 <> ?c2)	
+			-->
+            (create goal ?g (action unlock) (actor ?a) (object ?o))
+			(propose (?a goto ?c2) (:agent new-goal ?g))
+			==>        
+			return
+		)		
+		(rule
+			(?o is locked)
+			-->
+			(retract (?o is locked))
+		)
+	)
+)
+(problem Bananas
+	(topic Place-1
+		(type place)
+	)
+	(topic Place-2
+		(type place)
+	)	
+	(topic Place-3
+		(type place)
+	)	
+	(topic Monkey-1
+		(type monkey)
+		(container Place-1)
+	)
+	(topic Chest-1
+		(type chest)
+		(container Place-2)
+		(is locked)
+	)
+	(topic Banana-1
+		(type banana)
+		(container Chest-1)
+	)		
+	(topic Key-1
+		(type key)
+		(container Place-3)
+	)	
+	(topic Goal-1
+		(type goal)
+		(action get)
+		(actor Monkey-1)
+		(object Banana-1)
+	)
+	(topic :Agent
+		(type agent)
+		(goal Goal-1)
+	)
+)

@@ -1,0 +1,31 @@
+material frankie_skin/ALPHA/TEX/frankie_col.png
+{
+	technique
+	{
+		pass
+		{
+			diffuse 0.701961 0.466667 0.290196
+			specular 0.000000 0.000000 0.000000 25.000000
+			scene_blend alpha_blend 
+			texture_unit
+			{
+				texture frankie_col.png
+			}
+		}
+	}
+}
+material frankie_skin/SOLID/TEX/frankie_col.png
+{
+	technique
+	{
+		pass
+		{
+			diffuse 0.701961 0.466667 0.290196
+			specular 0.000000 0.000000 0.000000 25.000000
+			texture_unit
+			{
+				texture frankie_col.png
+			}
+		}
+	}
+}

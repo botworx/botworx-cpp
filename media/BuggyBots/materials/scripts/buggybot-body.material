@@ -1,0 +1,36 @@
+material buggybot-body/mat_8_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.2 0.2 0.2
+    diffuse 0.6 0.6 0.6
+    specular 0 0 0 0
+    emissive 0.2 0.2 0.2
+    texture_unit 
+    {
+        texture buggybot-body.PNG
+    }
+}
+}
+}
+
+material buggybot-body/mat_8_1
+{
+technique 
+{
+pass 
+{
+    ambient 0.2 0.2 0.2
+    diffuse 0.6 0.6 0.6
+    specular 0 0 0 0
+    emissive 0.2 0.2 0.2
+    texture_unit 
+    {
+        texture buggybot-body.PNG
+    }
+}
+}
+}
+

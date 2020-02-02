@@ -1,0 +1,116 @@
+/*AXL - A Lispish interpreter for Botworx AI - An Artificial Intelligence Framework
+Copyright (C) 2004  Kurtis Fields. See BotworxAI_License.txt for details.
+*/
+#include "stdafx.h"
+
+#include <bwaxl/AxlNumber.h>
+#include <bwaxl/AxlXop.h>
+#include <bwaxl/AxlFiber_impl.h>
+//
+//AxlCore Meta
+//
+DEFINE_ABSTRACT_KITTYPE(AxlCore) ;
+
+typedef AxlXop AxlQuoteXop ; 
+DEFINE_XOPTYPE(AxlQuoteXop) ;
+MBINFO_BEGIN(AxlQuoteXop)
+	MB_FORMALARG("X", MBF_SUPPRESSED, TT_CELL)
+MBINFO_END
+
+typedef AxlXop AxlConsXop ; 
+DEFINE_XOPTYPE(AxlConsXop) ;
+MBINFO_BEGIN(AxlConsXop)
+	MB_FORMALARG("L", MBF_DEFAULT, TT_CELL),
+	MB_FORMALARG("R", MBF_DEFAULT, TT_CELL)
+MBINFO_END
+
+typedef AxlXop AxlCarXop ; 
+DEFINE_XOPTYPE(AxlCarXop) ;
+MBINFO_BEGIN(AxlCarXop)
+	MB_FORMALARG("X", MBF_DEFAULT, TT_PAIR)
+MBINFO_END
+
+typedef AxlXop AxlCdrXop ; 
+DEFINE_XOPTYPE(AxlCdrXop) ;
+MBINFO_BEGIN(AxlCdrXop)
+	MB_FORMALARG("X", MBF_DEFAULT, TT_PAIR)
+MBINFO_END
+
+typedef AxlXop AxlNullXop ; 
+DEFINE_XOPTYPE(AxlNullXop) ;
+MBINFO_BEGIN(AxlNullXop)
+	MB_FORMALARG("X", MBF_DEFAULT, TT_CELL)
+MBINFO_END
+
+typedef AxlXop AxlSetXop ; 
+DEFINE_XOPTYPE(AxlSetXop) ;
+MBINFO_BEGIN(AxlSetXop)
+	MB_FORMALARG("S", MBF_DEFAULT, TT_CELL),
+	MB_FORMALARG("V", MBF_DEFAULT, TT_CELL)
+MBINFO_END
+
+typedef AxlXop AxlSetqXop ; 
+DEFINE_XOPTYPE(AxlSetqXop) ;
+MBINFO_BEGIN(AxlSetqXop)
+	MB_FORMALARG("S", MBF_SUPPRESSED, TT_CELL),
+	MB_FORMALARG("V", MBF_DEFAULT, TT_CELL)
+MBINFO_END
+
+typedef AxlXop AxlEqXop ; 
+DEFINE_XOPTYPE(AxlEqXop) ;
+MBINFO_BEGIN(AxlEqXop)
+	MB_FORMALARG("X", MBF_DEFAULT, TT_CELL),
+	MB_FORMALARG("Y", MBF_DEFAULT, TT_CELL)
+MBINFO_END
+
+typedef AxlXop AxlZeropXop ; 
+DEFINE_XOPTYPE(AxlZeropXop) ;
+MBINFO_BEGIN(AxlZeropXop)
+	MB_FORMALARG("X", MBF_DEFAULT, TT_CELL)
+MBINFO_END
+
+typedef AxlXop AxlSub1Xop ; 
+DEFINE_XOPTYPE(AxlSub1Xop) ;
+MBINFO_BEGIN(AxlSub1Xop)
+	MB_FORMALARG("X", MBF_DEFAULT, TT_CELL)
+MBINFO_END
+
+TYPEINFO_BEGIN(AxlCore)
+	TYPEINFO("QUOTE", AxlQuoteXop, XOP_QUOTE, MBF_DEFAULT),
+	TYPEINFO("CONS", AxlConsXop, XOP_CONS, MBF_DEFAULT),
+	TYPEINFO("CAR", AxlCarXop, XOP_CAR, MBF_DEFAULT),
+	TYPEINFO("CDR", AxlCdrXop, XOP_CDR, MBF_DEFAULT),
+	TYPEINFO("NULL", AxlNullXop, XOP_NULL, MBF_DEFAULT),
+	TYPEINFO("SET", AxlSetXop, XOP_SET, MBF_DEFAULT),
+	TYPEINFO("SETQ", AxlSetqXop, XOP_SETQ, MBF_DEFAULT),
+	TYPEINFO("EQ", AxlEqXop, XOP_EQ, MBF_DEFAULT),
+	TYPEINFO("ZEROP", AxlZeropXop, XOP_ZEROP, MBF_DEFAULT),
+	TYPEINFO("SUB1", AxlSub1Xop, XOP_SUB1, MBF_DEFAULT)
+TYPEINFO_END
+
+DECLARE_KITINFO(AxlXnKit) ;
+DECLARE_KITINFO(AxlCatcherKit) ;
+DECLARE_KITINFO(AxlBxKit) ;
+DECLARE_KITINFO(AxlXopKit) ;
+DECLARE_KITINFO(AxlEvalKit) ;
+DECLARE_KITINFO(AxlReplKit) ;
+DECLARE_KITINFO(AxlNumberKit) ;
+DECLARE_KITINFO(AxlLetKit) ;
+DECLARE_KITINFO(AxlFnKit) ;
+DECLARE_KITINFO(AxlControlKit) ;
+
+KITINFO_BEGIN(AxlCore)
+	KITINFOREF(AxlXnKit),
+	KITINFOREF(AxlCatcherKit),
+	KITINFOREF(AxlBxKit),
+	KITINFOREF(AxlXopKit),
+	KITINFOREF(AxlEvalKit),
+	KITINFOREF(AxlReplKit),
+	KITINFOREF(AxlNumberKit),
+	KITINFOREF(AxlFnKit),
+	KITINFOREF(AxlLetKit),
+	KITINFOREF(AxlControlKit)
+KITINFO_END
+
+DECLARE_KITINFO(AiCore) ;
+KITINFO_EX("core", AXL_KT_CORE, AxlCore, AiCore) ;

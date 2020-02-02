@@ -1,0 +1,117 @@
+predicate name(string)
+predicate speed(float)
+predicate time(float)
+predicate degree(float)
+predicate loop(bool)
+
+class Doggie()
+
+    def DesireEat(+ self hunger ?h)
+        rule
+            [?h > 10]
+            -->
+            desire
+                eat
+                
+    def Eat(eat)
+        choose-food :out ?f
+        goto ?f
+        animate :name "Eating" :speed 1.0 :loop false
+
+    #or...
+    
+    def Eat(eat)
+        precondition
+            self hunger ?h
+            [?h > 10]    
+        choose-food :out ?f
+        goto ?f
+        animate :name "Eating" :speed 1.0 :loop false
+
+    #or
+    
+    goal SatisfyHungerGoal(satisfy-hunger)
+        trigger Main(+self hunger $h)
+            precondition
+                [h > 10]        
+
+    plan SatisfyHunger(satisfy-hunger)
+        choose-food :out $f
+        eat $f
+        
+    goal EatGoal(eat $f)
+        trigger Main(perceive $f)
+            precondition
+                +self hunger ?h
+                [h > 10]
+        
+    plan Eat(eat $f)
+        goto $f
+        animate :name "Eating" :speed 1.0 :loop false        
+    #--------------------------
+
+    #Root Behavior
+    def Behave(behave)
+        priority-select :repeat true
+            bodily
+            active
+            passive
+
+    #Bodily Behaviors
+    def Bodily(bodily)
+        probability-select
+            case 20.0
+                fail #fail occasionally - give other behaviors a chance.
+            case 2.0
+                animate :name "LayingIdle" :speed .2 :loop false
+                animate :name "Sleeping" :speed .2 :loop false
+            case 4.0
+                random-turn :time 1.5
+                random-move :name "StalkingPrey" :speed 8.0 :time 0.5
+                animate :name "Peeing" :speed 1.0 :loop false
+                random-turn :time 1.5
+                random-move :name "JumpyRun" :speed 2.0 :time 6.0
+            case 4.0
+                animate :name "ScratchingBack" :speed 1.0 :loop false
+                animate :name "Scratching" :speed 1.0 :loop false
+
+    #Active Dog Behaviors
+    def Active(active)
+        probability-select
+            case 1.0    
+                fail #fail occasionally - give other behaviors a chance.
+            case .25
+                animate :name "ChaseTail" :speed 1.0 :loop true
+            case 5.0    
+                random-turn :degree 1.0
+                random-move :speed 4.0
+
+    #Passive Dog Behaviors
+    def Passive(passive)
+        probability-select
+            case 1.0    
+                animate :name "Sitting" :speed .34 :loop false
+            case 1.0    
+                animate :name "LayingIdle" :speed .67 :loop false
+
+    #Random Forward Movement
+    def RandomMove(random-move :name $n :speed $s :time $t)
+        parallel
+            translate :speed $s :time $t
+            animate :name $n :speed $s :loop true
+            wait :time $t
+
+    #Random Turning
+    def RandomTurn(random-turn :time $t)
+        probability-select
+            case 1.0
+                parallel
+                    rotate :degree 1.0
+                    animate :name "TurnLeft" :speed 1.0 :loop true
+                    wait :time $t :random $t
+            case 1.0    
+                parallel
+                    rotate :degree -1.0
+                    animate :name "TurnRight" :speed 1.0 :loop true
+                    wait :time $t :random $t
+

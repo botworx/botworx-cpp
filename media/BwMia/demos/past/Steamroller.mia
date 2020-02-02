@@ -1,0 +1,37 @@
+(concept Every-Wolf
+	(type set)
+)
+(concept Some-Wolf
+	(type set)
+	(eats Some-Fox -1)
+	(eats Some-Grain -1)
+)
+(concept Every-Fox
+	(type set)
+	(is-smaller-than Every-Wolf)
+)
+(concept Every-Bird
+	(type set)
+	(is-smaller-than Every-Fox)
+	(eats Every-Caterpillar)
+)
+(concept Some-Birds
+	(type set)
+	(eats Some-Snails -1)
+)
+(concept Every-Caterpillar
+	(type set)
+	(is-smaller-than Every-Bird)
+	(eats Some-Plants)
+)
+(concept Every-Snail
+	(type set)
+	(is-smaller-than Every-Bird)
+	(eats Some-Plants)
+)
+(concept Some-Snails
+	(type set)
+)
+(concept Some-Plants
+	(type set)
+)

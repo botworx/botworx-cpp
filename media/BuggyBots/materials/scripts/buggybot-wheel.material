@@ -1,0 +1,32 @@
+material buggybot-wheel/mat_14_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.1803922 0.1819608 0.1960784
+    diffuse 0.5411766 0.5458824 0.5882354
+    specular 0.856862807273865 0.864313787221909 0.931372606754303 95
+    emissive 0.1803922 0.1819608 0.1960784
+}
+}
+}
+
+material buggybot-wheel/mat_15_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.2 0.2 0.2
+    diffuse 0.6 0.6 0.6
+    specular 0 0 0 0
+    emissive 0.2 0.2 0.2
+    texture_unit 
+    {
+        texture MtlPlat2.JPG
+    }
+}
+}
+}
+

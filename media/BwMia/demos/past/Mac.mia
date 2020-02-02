@@ -1,0 +1,255 @@
+;
+; Mac : Mia Missionaries and Cannibals Implementation
+;
+(persona Mac ()
+	(mode main
+		;state success
+		(rule
+			(select goal ?g)
+			(?g object ?bank)
+			(?g missionaries ?m1)
+			(?bank missionaries ?m2)
+			(?m1 = ?m2)
+			(?g cannibals ?c1)
+			(?bank cannibals ?c2)
+			(?c1 = ?c2)
+			(?g boat ?b1)
+			(?bank boat ?b2)
+			(?b1 = ?b2)
+			-->
+			(assert(?g is achieved))
+			==>
+			success
+		)	
+		;state failure
+		(rule
+			(Bank-1 missionaries ?m1)
+			(?m1 > 0)
+			(Bank-1 cannibals ?c1)
+			(?m1 < ?c1)
+			-->
+			(assert(:state fail "Too many cannibals on Bank1!!!"))
+			==>
+			fail
+		)
+		;state failure
+		(rule
+			(Bank-2 missionaries ?m2)
+			(?m2 > 0)
+			(Bank-2 cannibals ?c2)
+			(?m2 < ?c2)
+			-->
+			(assert(:state fail "Too many cannibals on Bank2!!!"))
+			==>
+			fail
+		)
+		;state failure
+		(rule
+			(:parent-goal missionaries ?m1)
+			(:goal missionaries ?m2)
+			(?m1 = ?m2)
+			(:parent-goal cannibals ?c1)
+			(:goal cannibals ?c2)
+			(?c1 = ?c2)
+			-->
+			(assert(:state fail "State undoes parent goal!!!"))
+			==>
+			fail
+		)
+		(rule
+			(select goal ?g)
+			(not(?g is achieved))		
+			-->
+			(temporary(:agent achieve ?g))
+		)
+	)	
+	
+(op AllGoals (?g is achieved)
+	(mode main
+		(rule
+			(?g is achieved)
+			(Goal-1 is achieved)
+			==>
+			halt
+			==>
+			failure
+		)
+	)
+)
+(op MoveMissionaryProposal (:agent achieve ?g)
+	(mode main
+		(rule
+			(select bank ?bank1)
+			(?bank1 boat ?boat)
+			(?bank1 missionaries ?m)
+			(?m > 0)	
+			(select bank ?bank2)			
+			(?bank2 <> ?bank1)			
+			-->
+			(propose((:agent move-boat ?boat)
+				(missionaries 1)
+				(cannibals 0)
+				(source ?bank1)
+				(destination ?bank2) ) )
+			==>
+			success
+			==>
+			failure			
+		)
+	)
+)
+
+(op MoveCannibalProposal (:agent achieve ?g)
+	(mode main
+		(rule
+			(select bank ?bank1)
+			(?bank1 boat ?boat)
+			(?bank1 cannibals ?c)
+			(?c > 0)	
+			(select bank ?bank2)
+			(?bank2 <> ?bank1)			
+			-->
+			(propose ((:agent move-boat ?boat)
+				(missionaries 0)
+				(cannibals 1)
+				(source ?bank1)
+				(destination ?bank2) )
+			)
+			==>
+			success
+			==>
+			failure			
+		)
+	)
+)
+
+(op MoveMissionariesProposal (:agent achieve ?g)
+	(mode main
+		(rule
+			(select bank ?bank1)
+			(?bank1 boat ?boat)
+			(?bank1 missionaries ?m)
+			(?m > 1)	
+			(select bank ?bank2)
+			(?bank2 <> ?bank1)			
+			-->
+			(propose ((:agent move-boat ?boat)
+				(missionaries 2)
+				(cannibals 0)
+				(source ?bank1)
+				(destination ?bank2) )
+			)
+			==>
+			success
+			==>
+			failure			
+		)
+	)
+)
+
+(op MoveCannibalsProposal (:agent achieve ?g)
+	(mode main
+		(rule
+			(select bank ?bank1)
+			(?bank1 boat ?boat)
+			(?bank1 cannibals ?c)
+			(?c > 1)	
+			(select bank ?bank2)
+			(?bank2 <> ?bank1)			
+			-->
+			(propose ((:agent move-boat ?boat)
+				(missionaries 0)
+				(cannibals 2)
+				(source ?bank1)
+				(destination ?bank2) )
+			)
+			==>
+			success
+			==>
+			failure			
+		)
+	)
+)
+
+(op MoveMissionaryCannibalProposal (:agent achieve ?g)
+	(mode main
+		(rule
+			(select bank ?bank1)
+			(?bank1 boat ?boat)
+			(?bank1 missionaries ?m)
+			(?m > 0)
+			(?bank1 cannibals ?c)
+			(?c > 0)	
+			(select bank ?bank2)
+			(?bank2 <> ?bank1)			
+			-->
+			(propose ((:agent move-boat ?boat)
+				(missionaries 1)
+				(cannibals 1)
+				(source ?bank1)
+				(destination ?bank2) )
+			)
+			==>
+			success
+			==>
+			failure			
+		)
+	)
+)
+
+(op MoveBoatApply (:agent move-boat ?boat)
+	(mode main
+		(rule
+			(:fact source ?bank1)
+			(:fact destination ?bank2)
+			(:fact missionaries ?m)
+			(:fact cannibals ?c)
+			(?bank1 missionaries ?m1)
+			(?bank2 missionaries ?m2)
+			(?bank1 cannibals ?c1)
+			(?bank2 cannibals ?c2)
+			-->
+			(retract (?bank1 boat ?boat))
+			(assert 
+				(?bank2 boat ?boat)			
+				(?bank1 missionaries ?m1 -1)
+				(?bank2 missionaries ?m2 -1)			
+				(?bank1 cannibals ?c1 -1)
+				(?bank2 cannibals ?c2 -1)
+				(?bank1 missionaries (- ?m1 ?m))
+				(?bank2 missionaries (+ ?m2 ?m))
+				(?bank1 cannibals (- ?c1 ?c))
+				(?bank2 cannibals (+ ?c2 ?c))			
+			)
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+
+)
+(problem Mac
+	(concept Boat-1
+		(type boat)
+	)
+	(concept Bank-1
+		(type bank)
+		(missionaries 3)
+		(cannibals 3)
+		(boat Boat-1)
+	)
+	(concept Bank-2
+		(type bank)
+		(missionaries 0)
+		(cannibals 0)
+	)
+	(concept Goal-1
+		(type goal)
+		(object Bank-2)
+		(missionaries 3)
+		(cannibals 3)
+		(boat Boat-1)
+	)
+)

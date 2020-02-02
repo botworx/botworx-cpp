@@ -1,0 +1,166 @@
+;
+; WaterJug : Mia WaterJug Implementation
+;
+(domain Waterjug ()
+	(method main ()
+		(rule
+			monitor
+			(topic ?g (type goal))
+			(?g object ?j1)
+			(?g contents ?c1)
+			(?j1 contents ?c2)
+			(?c1 = ?c2)
+			==>
+			halt
+		)				
+		(rule
+			(topic ?g (type goal))
+			(not(?g is achieved))		
+			-->
+			(temporary (:agent achieve ?g))
+		)
+	)
+	(method AllGoals (?g is achieved)
+		(rule
+			(?g is achieved)
+			(Goal-1 is achieved)
+			==>
+			halt
+		)
+	)
+	(method PourProposal (:agent achieve ?g)
+		(rule
+			(topic ?j1 (type jug))
+			(topic ?j2 (type jug))
+			(?j1 <> ?j2)
+			(?j1 contents ?c)
+			(?c > 0)
+			(?j2 empty ?e)
+			(?e > 0)
+			-->		
+			(propose 
+				((:agent pour ?j1)
+					(destination ?j2) )
+			)
+		)
+	)
+	(method FillProposal (:agent achieve ?g)
+		(rule
+			(topic ?j1 (type jug))
+			(?j1 empty ?e)
+			(?e > 0)
+			-->
+			(propose (:agent fill ?j1))
+		)
+	)
+	(method EmptyProposal (:agent achieve ?g)
+		(rule
+			(topic ?j1 (type jug))
+			(?j1 contents ?c)
+			(?c > 0)
+			-->
+			(propose (:agent make-empty ?j1))
+		)
+	)
+	(method FillApply (:agent fill ?x)
+		(rule
+			(?x contents ?z)
+			-->
+			(retract (?x contents ?z))
+		)
+		(rule
+			(:agent fill ?x)
+			(?x volume ?v)
+			-->
+			(assert (?x contents ?v))
+		)
+	)
+	(method EmptyApply (:agent make-empty ?x)
+		(rule
+			(?x contents ?z)
+			-->
+			(retract (?x contents ?z))
+		)
+		(rule
+			(:agent make-empty ?x)
+			-->
+			(assert (?x contents 0))
+		)
+	)
+	(method PourApplyEmpty (:agent pour ?j1)
+		(rule
+			(:thought destination ?j2)
+			(?j1 contents ?c1)
+			(?j2 empty ?e2)
+			(?c1 >= ?e2)
+			==>
+			return
+		)
+		(rule
+			(:thought destination ?j2)
+			(?j1 contents ?c1)
+			(?j2 contents ?c2)
+			-->
+			(assert 
+				(?j1 contents ?c1 -1)
+				(?j2 contents ?c2 -1)			
+				(?j1 contents 0)
+				(?j2 contents (+ ?c1 ?c2))
+			)
+		)
+	)
+	(method PourApplyNotEmpty (:agent pour ?j1)
+		(rule
+			(:thought destination ?j2)
+			(?j1 contents ?c1)
+			(?j2 empty ?e2)
+			(?c1 < ?e2)
+			==>
+			return
+		)
+		(rule
+			(:thought destination ?j2)
+			(?j1 contents ?c1)
+			(?j2 contents ?c2)
+			(?j2 empty ?e2)
+			(?j2 volume ?v2)
+			-->
+			(assert 
+				(?j1 contents ?c1 -1)
+				(?j2 contents ?c2 -1)			
+				(?j1 contents (- ?c1 ?e2))
+				(?j2 contents ?v2)
+			)
+		)
+	)
+(method ContentsElab (?x contents ?c)
+		(rule
+			(?x empty ?f)
+			-->
+			(retract (?x empty ?f))
+		)
+		(rule
+			(?x contents ?c)
+			(?x volume ?v)
+			-->
+			(assert (?x empty (- ?v ?c)))
+		)
+	)
+)
+(problem Waterjug
+	(topic Jug-1
+		(type jug)
+		(volume 3)
+		(contents 0)
+	)
+	(topic Jug-2
+		(type jug)
+		(volume 5)
+		(contents 0)
+	)
+	(topic Goal-1
+		(type goal)
+		(object Jug-1)
+		(contents 1)
+	)
+)

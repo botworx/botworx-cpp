@@ -1,0 +1,228 @@
+;
+; Monkey & Bananas Problem
+;
+(persona Bananas
+	(mode main   
+	)
+	(mode idle
+		(rule
+			(:state topic ?g)
+			(?g type goal)
+			(not(?g is achieved))		
+			-->
+			(temporary (:agent achieve ?g))
+			==>
+			main
+			==>
+			main
+		)    
+	)	
+
+(op AllGoals (?g is achieved)
+	(mode main
+		(rule
+			(?g type goal)
+			(:state topic ?g1)
+			(?g1 type goal)
+			(?g1 is achieved)
+			-->
+			==>
+			halt
+			==>
+			failure
+		)
+	)
+)
+(op GotoApply (?a goto ?p1)
+	(mode main
+		(rule
+			(?a container ?p2)
+			-->
+			(assert 
+				(?a container ?p2 -1) ;retract
+				(?a container ?p1) ; new place
+			)
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+(op GetPropose (:agent achieve ?g)
+	(mode main 
+        (rule
+        MONITOR
+            (?g action get)
+			(?g actor ?a)
+			(?g object ?o)
+            (?a contains ?o)
+            -->
+            (?g is achieved)
+            (destroy ?g)
+            ==>
+            success ;?
+        )	
+		(rule
+        MONITOR
+            (?g action get)
+			(?g actor ?a)
+			(?g object ?o)
+            ;
+			;(?a container ?c1)
+			;(?c1 type place)
+			;(?o container ?c2)
+			;(?c2 type place)
+			;(?c1 = ?c2)            
+			-->
+			(propose (?a get ?o))
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+(op GetApply (?a get ?o)
+	(mode main
+		(rule
+			MONITOR		        
+			(?o container ?c)
+			(?c is locked)
+			-->
+            (create goal (action get) (actor ?a) (object ?o))
+			(propose (?a unlock ?c))
+			==>
+			failure
+		)	
+		(rule
+			(?a container ?c1)
+			(?c1 type place)
+			(?o container ?c2)
+			(?c2 type place)
+			(?c1 <> ?c2)
+			-->
+            (create goal (action get) (actor ?a) (object ?o))
+			(propose (?a goto ?c2))
+			==>
+			failure
+		)		
+		(rule
+			(?o container ?c)
+			-->
+			(assert 
+				(?o container ?c -1)
+                (?o container ?a)
+				(?a contains ?o) ; interesting ... holding object = containment?
+			)
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+(op UnlockPropose (:agent achieve ?g)
+	(mode main
+		(rule
+        MONITOR        
+            (?g action unlock)
+			(?g object ?o)
+			(not(?o is locked))
+			-->
+			(assert (?g is achieved))
+			(destroy ?g)
+			==>
+			failure
+		)	
+		(rule
+            (?g action unlock)
+			(?g actor ?a)
+			(?g object ?o)
+			(?a container ?c1)
+			(?c1 type place)
+			(?o container ?c2)
+			(?c2 type place)
+			(?c1 = ?c2)
+			-->
+			(propose (?a unlock ?o))
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+(op UnlockApply (?a unlock ?o)
+	(mode main
+		(rule
+			MONITOR
+			(:state topic ?k)
+			(?k type key)			
+			(not(?a contains ?k))
+			-->
+            (create goal (action unlock) (actor ?a) (object ?o))
+			(propose (?a get ?k))
+			==>
+			failure
+		)	
+		(rule
+			MONITOR
+			(?a container ?c1)
+			(?c1 type place)
+            (?o container ?c2)
+            (?c2 type place)
+			(?c1 <> ?c2)	
+			-->
+            (create goal (action unlock) (actor ?a) (object ?o))
+			(propose (?a goto ?c2))
+			==>
+			failure
+		)		
+		(rule
+			(?o is locked)
+			-->
+			(retract (?o is locked))
+            ==>
+            success
+            ==>
+            failure
+		)
+	)
+)
+)
+(problem Bananas
+	(concept Place-1
+		(type place)
+	)
+	(concept Place-2
+		(type place)
+	)	
+	(concept Place-3
+		(type place)
+	)	
+	(concept Monkey-1
+		(type monkey)
+		(container Place-1)
+	)
+	(concept Chest-1
+		(type chest)
+		(container Place-2)
+		(is locked)
+	)
+	(concept Banana-1
+		(type banana)
+		(container Chest-1)
+	)		
+	(concept Key-1
+		(type key)
+		(container Place-3)
+	)	
+	(concept Goal-1
+		(type goal)
+		(action get)        
+		(actor Monkey-1)
+		(object Banana-1)
+	)
+	(concept (Monkey-1 get Banana-1))
+)

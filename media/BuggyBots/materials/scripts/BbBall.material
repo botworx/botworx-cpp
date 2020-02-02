@@ -1,0 +1,14 @@
+material BbBall/mat_1_0
+{
+technique 
+{
+pass 
+{
+    ambient 5.490196E-02 0.1019608 0.1411765
+    diffuse 0.1647059 0.3058824 0.4235294
+    specular 0 0 0 0
+    emissive 5.490196E-02 0.1019608 0.1411765
+}
+}
+}
+

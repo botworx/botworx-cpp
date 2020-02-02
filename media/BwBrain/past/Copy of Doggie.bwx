@@ -1,0 +1,12 @@
+predicate name(string)
+predicate speed(float)
+predicate time(float)
+predicate loop(bool)
+
+class Doggie():
+    #Random Forward Movement
+    def RandomMove(random-move :name $n :speed $s :time $t)
+       parallel:
+            translate :speed $s :time $t
+            animate :name $n :speed 1.0 :loop true
+            waitfor :time $t

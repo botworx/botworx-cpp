@@ -1,0 +1,95 @@
+;
+; Blox : Mia Blocks World Implementation
+;
+(persona SubjectTest (blah blah blah)
+	(mode main
+	)
+	(mode idle
+		(assert (
+			(:state topic ?g)
+			(?g type goal)
+			(not(?g is achieved))		
+			-->
+			(:agent achieve ?g)
+			)
+			==>
+			main
+			==>
+			main
+		)
+	)	
+
+(op AllGoals (?g is achieved)
+	(mode main
+		(assert (
+			(?g is achieved)
+			(Goal-1 is achieved)
+			-->
+			)
+			==>
+			halt
+			==>
+			failure
+		)
+	)
+)
+(op StackerPropose (:agent achieve ?g)
+	(mode guard 
+		(assert (
+			(?g object ?b1)
+			(?g destination ?b2)
+			(?b1 on-top ?b2)
+			-->
+			(?g is achieved)
+			)
+			==>
+			failure
+			==>
+			main
+		)
+	)
+	(mode main
+		(propose (
+			(:state topic ?b1)
+			(?b1 type block)
+			(:state topic ?b2)
+			(?b2 type block)			
+			(?b1 <> ?b2)
+			-->
+			((:agent stack ?b1)
+				(destination ?b2)
+			)
+			)
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+)
+(concept Table-1
+	(type table)
+	(is clear)
+)
+(concept Block-1
+	(type block)
+	(on-top Table-1)
+	(is clear)
+)
+(concept Block-2
+	(type block)
+	(on-top Block-1)
+	(is clear)
+)
+(concept Block-3
+	(type block)
+	(on-top Block-2)
+	(is clear)
+)
+(concept Goal-1
+	(type goal)
+	(action move)
+	(object Block-1)
+	(destination Block-2)
+)

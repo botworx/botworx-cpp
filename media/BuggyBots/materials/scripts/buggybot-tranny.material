@@ -1,0 +1,14 @@
+material buggybot-tranny/mat_1_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.1796078 0.1796078 0.1796078
+    diffuse 0.5388235 0.5388235 0.5388235
+    specular 0 0 0 0
+    emissive 0.1796078 0.1796078 0.1796078
+}
+}
+}
+

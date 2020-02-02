@@ -1,0 +1,105 @@
+;
+; External State Manipulation
+;
+
+(op SiblingFinder (?x sibling ?y 0)
+	(mode main
+		(rule
+			(?x parent ?p)
+			(?p child ?y)		
+			-->
+			(?x sibling ?y)
+			(?y <> ?x)
+			(print)			
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+
+(op SiblingFinder2 (?x sibling unknown 0)
+	(mode main
+		(rule
+			(?x parent ?p)
+			(?p child ?y)
+			(?y <> ?x)
+			-->
+			(?x sibling ?y)
+			(print)
+			==>
+			success
+			==>
+			failure			
+		)
+	)
+)
+(persona SiblingQuery ()
+	(mode main)
+	(op main ()
+		(mode main
+			(rule
+				(billy sibling ?s)
+				-->
+				(print)
+				==>
+				success
+				==>
+				failure			
+			)
+		)
+	)		
+)
+(state Mary
+	(topic Mary
+		(type person)
+		(family Smith)
+		(spouse John)
+		(child Billy)
+		(child Suzy)		
+	)
+)
+(state John
+	(topic John
+		(type person)
+		(family Smith)
+		(spouse Mary)
+		(child Billy)
+		(child Suzy)
+	)
+)
+
+(state Billy
+	(topic Billy
+		(type person)
+		(family Smith)
+		(parent John)
+		(parent Mary)
+	)
+)
+(state Suzy
+	(topic Suzy
+		(type person)
+		(family Smith)
+		(parent John)
+		(parent Mary)
+	)
+)
+(state Smith
+	(topic Smith
+		(type family)
+	)
+)
+(state Person
+	(topic John (type person))
+	(topic Mary (type person))
+	(topic Billy (type person))
+	(topic Suzy (type person))
+)
+(problem SiblingQuery
+	(topic John (type person))
+	(topic Mary (type person))
+	(topic Billy (type person))
+	(topic Suzy (type person))
+)

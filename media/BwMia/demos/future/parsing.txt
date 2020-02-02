@@ -1,0 +1,12 @@
+method (?x is foo):
+    rule:
+        ?x has ?y
+        ?y is bar
+        -->
+        ?y is foo
+        
+Becomes...
+
+(method (?x is foo)
+    (rule
+        (?x has ?y)

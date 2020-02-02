@@ -1,0 +1,53 @@
+;
+; Blox : Mia Blocks World Implementation
+;
+{domain Main (blah blah blah)
+	{mode main
+	}
+	{mode idle
+	}		
+
+{op propose-move (:agent sees ?x)
+	{mode main
+		{propose {
+			(?x type place)
+			(?x is vacant)
+			-->
+			(:agent move-to ?x)
+			}
+			==>
+			success
+			==>
+			failure
+		}
+	}
+}
+{op apply-move (:agent move-to ?p)
+	{mode main
+		{assert {
+			(?p type place)
+			(?p coord-x ?x)			
+			(?p coord-y ?y)
+			-->
+			(:agent at ?x)
+			(:state script |move_to($?x$ , $?y$)|)
+			}
+			==>
+			solution
+			==>
+			failure
+		}
+	}
+	{mode halt}	
+}
+}
+
+{mind Place-1
+	(type place)
+	(is vacant)	
+	(coord-x 10)
+	(coord-y 20)	
+}
+{mind (:agent sees Place-1)
+	(type event)
+}

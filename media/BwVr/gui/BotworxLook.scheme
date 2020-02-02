@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<GUIScheme Name="BotworxLook">
+	<Imageset Name="BotworxLook" Filename="BotworxLook.imageset" />
+	<LookNFeel Filename="BotworxLook.looknfeel" />
+	<WindowRendererSet Filename="CEGUIFalagardWRBase" />
+	<FalagardMapping WindowType="BotworxLook/Button"      TargetType="CEGUI/PushButton"  Renderer="Falagard/Button"       LookNFeel="BotworxLook/Button" />
+	<FalagardMapping WindowType="BotworxLook/Checkbox"    TargetType="CEGUI/Checkbox"    Renderer="Falagard/ToggleButton" LookNFeel="BotworxLook/Checkbox" />
+	<FalagardMapping WindowType="BotworxLook/ImageButton" TargetType="CEGUI/PushButton"  Renderer="Falagard/Button"       LookNFeel="BotworxLook/ImageButton" />
+	<FalagardMapping WindowType="BotworxLook/RadioButton" TargetType="CEGUI/RadioButton" Renderer="Falagard/ToggleButton" LookNFeel="BotworxLook/RadioButton" />
+	<FalagardMapping WindowType="BotworxLook/FrameWindow"  TargetType="CEGUI/FrameWindow" Renderer="Falagard/FrameWindow"  LookNFeel="BotworxLook/FrameWindow" />
+	<FalagardMapping WindowType="BotworxLook/Titlebar"     TargetType="CEGUI/Titlebar"    Renderer="Falagard/Titlebar"     LookNFeel="BotworxLook/Titlebar" />
+	<FalagardMapping WindowType="BotworxLook/SystemButton" TargetType="CEGUI/PushButton"  Renderer="Falagard/SystemButton" LookNFeel="BotworxLook/Button" />
+	<FalagardMapping WindowType="BotworxLook/Editbox"          TargetType="CEGUI/Editbox"          Renderer="Falagard/Editbox"          LookNFeel="BotworxLook/Editbox" />
+	<FalagardMapping WindowType="BotworxLook/MultiLineEditbox" TargetType="CEGUI/MultiLineEditbox" Renderer="Falagard/MultiLineEditbox" LookNFeel="BotworxLook/MultiLineEditbox" />
+	<FalagardMapping WindowType="BotworxLook/Menubar"   TargetType="CEGUI/Menubar"   Renderer="Falagard/Menubar"   LookNFeel="BotworxLook/Menubar" />
+	<FalagardMapping WindowType="BotworxLook/PopupMenu" TargetType="CEGUI/PopupMenu" Renderer="Falagard/PopupMenu" LookNFeel="BotworxLook/PopupMenu" />
+	<FalagardMapping WindowType="BotworxLook/MenuItem"  TargetType="CEGUI/MenuItem"  Renderer="Falagard/MenuItem"  LookNFeel="BotworxLook/MenuItem" />
+	<FalagardMapping WindowType="BotworxLook/AlternateProgressBar" TargetType="CEGUI/ProgressBar" Renderer="Falagard/ProgressBar" LookNFeel="BotworxLook/AltProgressBar" />
+	<FalagardMapping WindowType="BotworxLook/ProgressBar"          TargetType="CEGUI/ProgressBar" Renderer="Falagard/ProgressBar" LookNFeel="BotworxLook/ProgressBar" />
+	<FalagardMapping WindowType="BotworxLook/VUMeter"              TargetType="CEGUI/ProgressBar" Renderer="Falagard/ProgressBar" LookNFeel="BotworxLook/VUMeter" />
+	<FalagardMapping WindowType="BotworxLook/VerticalScrollbar"   TargetType="CEGUI/Scrollbar" Renderer="Falagard/Scrollbar" LookNFeel="BotworxLook/VerticalScrollbar" />
+	<FalagardMapping WindowType="BotworxLook/HorizontalScrollbar" TargetType="CEGUI/Scrollbar" Renderer="Falagard/Scrollbar" LookNFeel="BotworxLook/HorizontalScrollbar" />
+	<FalagardMapping WindowType="BotworxLook/VerticalScrollbarThumb"   TargetType="CEGUI/Thumb" Renderer="Falagard/Button" LookNFeel="BotworxLook/VerticalScrollbarThumb" />
+	<FalagardMapping WindowType="BotworxLook/HorizontalScrollbarThumb" TargetType="CEGUI/Thumb" Renderer="Falagard/Button" LookNFeel="BotworxLook/HorizontalScrollbarThumb" />
+	<FalagardMapping WindowType="BotworxLook/LargeVerticalScrollbar"      TargetType="CEGUI/Scrollbar" Renderer="Falagard/Scrollbar" LookNFeel="BotworxLook/LargeVerticalScrollbar" />
+	<FalagardMapping WindowType="BotworxLook/LargeVerticalScrollbarThumb" TargetType="CEGUI/Thumb"     Renderer="Falagard/Button"    LookNFeel="BotworxLook/LargeVerticalScrollbarThumb" />
+	<FalagardMapping WindowType="BotworxLook/TabButton"  TargetType="CEGUI/TabButton"  Renderer="Falagard/TabButton"  LookNFeel="BotworxLook/TabButton" />
+	<FalagardMapping WindowType="BotworxLook/TabControl" TargetType="CEGUI/TabControl" Renderer="Falagard/TabControl" LookNFeel="BotworxLook/TabControl" />
+	<FalagardMapping WindowType="BotworxLook/TabContentPane"    TargetType="DefaultWindow"    Renderer="Falagard/Default"    LookNFeel="BotworxLook/TabContentPane" />
+	<FalagardMapping WindowType="BotworxLook/TabButtonPane"    TargetType="DefaultWindow"    Renderer="Falagard/Default"    LookNFeel="BotworxLook/TabButtonPane" />
+	<FalagardMapping WindowType="BotworxLook/ComboDropList" TargetType="CEGUI/ComboDropList" Renderer="Falagard/Listbox" LookNFeel="BotworxLook/ComboDropList" />
+	<FalagardMapping WindowType="BotworxLook/ComboEditbox"  TargetType="CEGUI/Editbox"	 Renderer="Falagard/Editbox" LookNFeel="BotworxLook/ComboEditbox" />
+	<FalagardMapping WindowType="BotworxLook/Combobox"	TargetType="CEGUI/Combobox"	 Renderer="Falagard/Default" LookNFeel="BotworxLook/Combobox" />
+	<FalagardMapping WindowType="BotworxLook/Listbox"           TargetType="CEGUI/Listbox"           Renderer="Falagard/Listbox"           LookNFeel="BotworxLook/Listbox" />
+	<FalagardMapping WindowType="BotworxLook/ListHeader"        TargetType="CEGUI/ListHeader"        Renderer="Falagard/ListHeader"        LookNFeel="BotworxLook/ListHeader" />
+	<FalagardMapping WindowType="BotworxLook/ListHeaderSegment" TargetType="CEGUI/ListHeaderSegment" Renderer="Falagard/ListHeaderSegment" LookNFeel="BotworxLook/ListHeaderSegment" />
+	<FalagardMapping WindowType="BotworxLook/MultiColumnList"   TargetType="CEGUI/MultiColumnList"   Renderer="Falagard/MultiColumnList"   LookNFeel="BotworxLook/MultiColumnList" />
+	<FalagardMapping WindowType="BotworxLook/Slider"      TargetType="CEGUI/Slider"      Renderer="Falagard/Slider"  LookNFeel="BotworxLook/Slider" />
+	<FalagardMapping WindowType="BotworxLook/SliderThumb" TargetType="CEGUI/Thumb" Renderer="Falagard/Button"  LookNFeel="BotworxLook/SliderThumb" />
+	<FalagardMapping WindowType="BotworxLook/ScrollablePane" TargetType="CEGUI/ScrollablePane" Renderer="Falagard/ScrollablePane" LookNFeel="BotworxLook/ScrollablePane" />
+	<FalagardMapping WindowType="BotworxLook/Spinner" TargetType="CEGUI/Spinner" Renderer="Falagard/Default" LookNFeel="BotworxLook/Spinner" />
+	<FalagardMapping WindowType="BotworxLook/Tooltip" TargetType="CEGUI/Tooltip" Renderer="Falagard/Tooltip" LookNFeel="BotworxLook/Tooltip" />
+	<FalagardMapping WindowType="BotworxLook/StaticImage" TargetType="DefaultWindow" Renderer="Falagard/StaticImage" LookNFeel="BotworxLook/StaticImage" />
+	<FalagardMapping WindowType="BotworxLook/StaticText"  TargetType="DefaultWindow" Renderer="Falagard/StaticText"  LookNFeel="BotworxLook/StaticText" />
+</GUIScheme>

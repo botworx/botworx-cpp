@@ -1,0 +1,14 @@
+material buggybot-axle/mat_4_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.16 0.16 0.16
+    diffuse 0.48 0.48 0.48
+    specular 0 0 0 0
+    emissive 0.16 0.16 0.16
+}
+}
+}
+

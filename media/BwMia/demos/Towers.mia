@@ -1,0 +1,234 @@
+;
+; Towers : Mia Towers of Hanoi Implementation
+;
+(domain Towers ()
+	(method main () ; methods with no parameters are evaluated on state creation, sorta like constructors.
+		(rule
+			(topic ?g (type goal))
+			(not(?g is suspended))
+			(not(?g is achieved))		
+			-->
+			(temporary (:agent achieve ?g))	; temporary means fact does not get copied to successor states
+			==>
+			 main
+		)
+	)
+	(method IsAcheivedElab (?g is achieved)
+		(rule
+			-->
+			(assert (:state benefit 2))
+		)
+	)
+	(method AllGoals (?g is achieved)
+		(rule
+			(?g type goal)
+			; TODO: select can not be last condition ... solution?
+			(topic ?g1 (type goal))
+			(?g1 is achieved)
+			==>
+			halt
+		)
+	)	
+	(method StackerPropose (:agent achieve ?g)
+		(rule
+			(?g object ?d1)
+			(?g destination ?d2)
+			(?g at ?p1)
+			(?d1 on-top ?d2)
+			(?d1 at ?p1)
+			-->
+			(assert (?g is achieved))
+			==>
+			return
+		)	
+		(rule
+			(?g object ?d1)
+			(?g destination ?d2)
+			(?g at ?p1)
+			-->
+			(propose 
+				((:agent stack ?d1)
+					(destination ?d2)
+					(at ?p1)
+				)
+			)
+		)
+	)
+	(method ClearApply (:agent clear ?x)
+		(rule
+			(?x beneath ?y)
+			(?x at ?p1)					
+			(topic ?z)
+			(?x <> ?z)
+			(?y <> ?z)			
+			(?z at ?p2)
+			(?p2 <> ?p1)
+			(?z is clear)
+			(?y size ?s1)
+			(?z size ?s2)
+			(?s1 < ?s2)
+			-->
+			(propose 
+				((:agent stack ?y)
+					(destination ?z)
+					(at ?p2)
+				)
+			)
+		)
+	)
+	(method StackerApply (:agent stack ?x)
+		(rule
+			(not(?x is clear))
+			-->
+			(propose (:agent clear ?x))
+			==>
+			return
+		)
+		(rule
+			(:thought destination ?y)
+			(not(?y is clear))
+			-->
+			(propose (:agent clear ?y))
+			==>
+			return
+		)	
+		(rule
+			(?x on-top ?z)
+			-->
+			(retract (?x on-top ?z))
+		)
+		(rule
+			(?x at ?p1)
+			-->
+			(retract (?x at ?p1))
+		)
+		(rule
+			(:thought destination ?y)
+			-->
+			(assert (?x on-top ?y))
+		)		
+		(rule
+			(:thought at ?p2)
+			-->
+			(assert (?x at ?p2))
+		)
+	)
+; -1 means to match a retraction
+
+	(method NotOnTopElab (?x on-top ?y -1)
+		(rule
+			(?y beneath ?x)
+			-->
+			(retract (?y beneath ?x))
+		)
+		(rule
+			-->
+			(assert (?y is clear))
+		)
+	)
+	(method OntopElab (?x on-top ?y)
+		(rule
+			(?y is clear)
+			-->
+			(retract (?y is clear))
+		)
+		(rule
+			(?x on-top ?y)
+			-->
+			(assert (?y beneath ?x))
+		)
+	)
+	(method HasDependentElab (?a depends-on ?b)
+		(rule
+			(?a depends-on ?b)
+			-->
+			(assert (?b has-dependent ?a))
+		)
+	)
+	(method DependsOnElab (?a depends-on ?b)
+		(rule
+			(?a depends-on ?b)
+			(?b depends-on ?c)
+			-->
+			(assert (?a indirectly-depends-on ?c))
+		)
+	)
+	(method SuspendedElab (?a depends-on ?b)
+		(rule
+			(?a depends-on ?b)
+			(not(?b is achieved))
+			-->
+			(assert (?a is suspended))
+		)
+	)
+	(method NotSuspendedElab (?a is achieved)
+		(rule
+			(?a has-dependent ?b)
+			(?b is suspended)
+			-->
+			(retract (?b is suspended))
+		)
+	)
+)
+(problem Towers
+	(topic Peg-1
+		(type peg)
+		(at Peg-1)
+		(size 4)
+	)
+	(topic Peg-2
+		(type peg)
+		(is clear)
+		(at Peg-2)
+		(size 4)
+	)
+	(topic Peg-3
+		(type peg)
+		(is clear)
+		(at Peg-3)
+		(size 4)
+	)
+
+	(topic Disc-1
+		(type disc)
+		(at Peg-1)
+		(on-top Disc-2)
+		(is clear)
+		(size 1)
+	)
+	(topic Disc-2
+		(type disc)
+		(at Peg-1)
+		(on-top Disc-3)
+		(size 2)
+	)
+	(topic Disc-3
+		(type disc)
+		(at Peg-1)
+		(on-top Peg-1)
+		(size 3)
+	)
+	(topic Goal-1
+		(type goal)
+		(depends-on Goal-2)
+		(action move)
+		(object Disc-1)
+		(destination Disc-2)
+		(at Peg-3)
+	)
+	(topic Goal-2
+		(type goal)
+		(depends-on Goal-3)
+		(action move)
+		(object Disc-2)
+		(destination Disc-3)
+		(at Peg-3)
+	)
+	(topic Goal-3
+		(type goal)
+		(action move)
+		(object Disc-3)
+		(destination Peg-3)
+		(at Peg-3)
+	)
+)

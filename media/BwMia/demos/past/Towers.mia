@@ -1,0 +1,293 @@
+;
+; Towers : Mia Towers of Hanoi Implementation
+;
+(persona Towers (blah blah blah)
+	(mode main
+	)
+	(mode idle
+		(assert (
+			(:state topic ?g)
+			(?g type goal)
+			(not(?g is achieved))		
+			-->
+			(:agent eval ?g)
+			)
+			==>
+			main
+			==>
+			main
+		)
+	)	
+	
+; fix this to work on any goals ... (?g type goal) (?g is acheived) ...
+
+(op AllGoals (?g is achieved)
+	(mode main
+		(assert (
+			(?g is achieved)
+			(Goal-1 is achieved)
+			(Goal-2 is achieved)
+			(Goal-3 is achieved)
+			-->
+			)
+			==>
+			halt
+			==>
+			failure
+		)
+	)
+)
+(op GoalEval (:agent eval ?g1)
+	(mode guard
+		(assert (
+			(?g1 depends-on ?g2)
+			(not(?g2 is achieved))
+			-->
+			(:agent achieve ?g2)
+			)
+			==>
+			failure
+			==>
+			main
+		)
+	)
+	(mode main
+		(propose (
+			(:agent eval ?g1)
+			-->
+			(:agent achieve ?g1)
+			)
+			==>
+			success
+			==>
+			failure
+		)
+	)	
+)
+
+(op StackerPropose (:agent achieve ?g)
+	(mode guard 
+		(assert (
+			(?g object ?d1)
+			(?g destination ?d2)
+			(?g at ?p1)
+			(?d1 on-top ?d2)
+			(?d1 at ?p1)
+			-->
+			(?g is achieved)
+			)
+			==>
+			failure
+			==>
+			main
+		)
+	)
+	(mode main
+		(propose (
+			(?g object ?d1)
+			(?g destination ?d2)
+			(?g at ?p1)
+			-->
+			((:agent stack ?d1)
+				(destination ?d2)
+				(at ?p1)
+			)
+			)
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+(op StateElab (:state type state)
+	(mode main
+		(assert (
+			-->
+			(:state is good)
+			)
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+(op ClearApply (:agent clear ?x)
+	(mode main
+		(propose (
+			(?x beneath ?y)
+			(?x at ?p1)					
+			(:state topic ?z)		
+			(?z at ?p2)
+			(?p2 <> ?p1)
+			(?z is clear)
+			(?x <> ?z)
+			(?y <> ?z)
+			-->
+			((:agent stack ?y)
+				(destination ?z)
+				(at ?p2)
+			)
+			)
+			==>		
+			success
+			==>
+			failure
+		)
+	)
+)
+(op StackerApply (:agent stack ?x)
+	(mode guard1
+		(propose (
+			(not(?x is clear))
+			-->
+			(:agent clear ?x)
+			)
+			==>
+			failure
+			==>
+			guard2
+		)
+	)
+	(mode guard2
+		(propose (
+			(:fact destination ?y)
+			(?y type disc)
+			(not(?y is clear))
+			-->
+			(:agent clear ?y)
+			)
+			==>
+			failure
+			==>
+			main
+		)
+	)
+	(mode main
+		(retract (
+			(?x on-top ?z)
+			-->
+			(?x on-top ?z)
+			)
+		)
+		(retract (
+			(?x at ?p1)
+			-->
+			(?x at ?p1)
+			)
+		)
+		(assert (
+			(:fact destination ?y)
+			-->
+			(?x on-top ?y)
+			)
+		)		
+		(assert (
+			(:fact at ?p2)
+			-->
+			(?x at ?p2)
+			)
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+; -1 means to match a retraction
+
+(op NotOnTopElab (?x on-top ?y -1)
+	(mode main
+		(retract (
+			(?y beneath ?x)
+			-->
+			(?y beneath ?x)
+			)
+		)
+		(assert (
+			-->
+			(?y is clear)
+			)
+			==>
+			success
+			==>
+			failure	
+		)
+	)
+)
+(op OntopElab (?x on-top ?y)
+	(mode main
+		(retract (
+			(?y is clear)
+			-->
+			(?y is clear)
+			)
+		)
+		(assert (
+			(?x on-top ?y)
+			-->
+			(?y beneath ?x)
+			)
+			==>
+			success
+			==>
+			failure
+		)
+	)
+)
+)
+(concept Peg-1
+	(type peg)
+	(at Peg-1)
+)
+(concept Peg-2
+	(type peg)
+	(is clear)
+	(at Peg-2)
+)
+(concept Peg-3
+	(type peg)
+	(is clear)
+	(at Peg-3)
+)
+
+(concept Disc-1
+	(type disc)
+	(at Peg-1)
+	(on-top Disc-2)
+	(is clear)
+)
+(concept Disc-2
+	(type disc)
+	(at Peg-1)
+	(on-top Disc-3)
+)
+(concept Disc-3
+	(type disc)
+	(at Peg-1)
+	(on-top Peg-1)
+)
+(concept Goal-1
+	(type goal)
+	(depends-on Goal-2)
+	(action move)
+	(object Disc-1)
+	(destination Disc-2)
+	(at Peg-3)
+)
+(concept Goal-2
+	(type goal)
+	(depends-on Goal-3)
+	(action move)
+	(object Disc-2)
+	(destination Disc-3)
+	(at Peg-3)
+)
+(concept Goal-3
+	(type goal)
+	(action move)
+	(object Disc-3)
+	(destination Peg-3)
+	(at Peg-3)
+)

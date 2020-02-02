@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EspProtoServer", "EspProtoServer.vcproj", "{7F76D497-EAB3-4EEA-814A-99BFB428CAEA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F9CEAF2F-C821-4D63-A726-99378308D5C0} = {F9CEAF2F-C821-4D63-A726-99378308D5C0}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BwKernel", "..\..\..\BwKernel\vc9\BwKernel.vcproj", "{F9CEAF2F-C821-4D63-A726-99378308D5C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F76D497-EAB3-4EEA-814A-99BFB428CAEA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7F76D497-EAB3-4EEA-814A-99BFB428CAEA}.Debug|Win32.Build.0 = Debug|Win32
+		{7F76D497-EAB3-4EEA-814A-99BFB428CAEA}.Release|Win32.ActiveCfg = Release|Win32
+		{7F76D497-EAB3-4EEA-814A-99BFB428CAEA}.Release|Win32.Build.0 = Release|Win32
+		{F9CEAF2F-C821-4D63-A726-99378308D5C0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F9CEAF2F-C821-4D63-A726-99378308D5C0}.Debug|Win32.Build.0 = Debug|Win32
+		{F9CEAF2F-C821-4D63-A726-99378308D5C0}.Release|Win32.ActiveCfg = Release|Win32
+		{F9CEAF2F-C821-4D63-A726-99378308D5C0}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

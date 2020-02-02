@@ -1,0 +1,14 @@
+material VrCone/mat_1_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.2 0.1294118 0
+    diffuse 0.6 0.3882353 0
+    specular 0.5 0.323529422283173 0 50
+    emissive 0.2 0.1294118 0
+}
+}
+}
+

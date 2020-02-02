@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<GUILayout>
+	<Window Type="DefaultWindow" Name="BbMainCp">
+		<Property Name="AbsoluteRect" Value="l:14.000000 t:8.000000 r:626.000000 b:464.000000" />
+		<Property Name="RelativeRect" Value="l:0.021875 t:0.016667 r:0.978124 b:0.966666" />
+		<Window Type="BotworxLook/TabControl" Name="BbMainCp/TabCtrl">
+			<Property Name="AbsoluteRect" Value="l:0.000000 t:0.000000 r:612.000000 b:228.000000" />
+			<Property Name="RelativeRect" Value="l:0.000000 t:0.000000 r:1.000000 b:0.500000" />
+			</Window>
+		</Window>
+</GUILayout>

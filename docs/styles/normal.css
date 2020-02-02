@@ -1,0 +1,383 @@
+.tabFrame
+{
+	BORDER: 0;
+	HEIGHT: 90%;
+	WIDTH: 100%;
+	BORDER-TOP: #93BEE2 9PX SOLID;
+	BORDER-BOTTOM: #93BEE2 9PX SOLID;
+	BORDER-LEFT: #93BEE2 9PX SOLID;
+	BORDER-RIGHT: #93BEE2 9PX SOLID;
+	SCROLLBAR-FACE-COLOR:#6699CC;
+	SCROLLBAR-HIGHLIGHT-COLOR:#FFFFFF;
+	SCROLLBAR-SHADOW-COLOR:#6699CC;
+	SCROLLBAR-ARROW-COLOR:#FFFFFF;
+	SCROLLBAR-DARKSHADOW-COLOR:#6699CC;
+}
+
+.tabOff
+{
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 11;
+	FONT-WEIGHT: 700;
+	TEXT-ALIGN: CENTER;
+	COLOR: #003399;
+	BACKGROUND-COLOR: #c4e0f0;
+	BORDER-BOTTOM: #c4e0f0 1PX SOLID;
+	HEIGHT: 25;
+	CURSOR: HAND;
+}
+
+.tabOn
+{
+	FONT-FAMILY: Verdana;
+	FONT-SIZE: 11;
+	FONT-WEIGHT: 700;
+	TEXT-ALIGN: CENTER;
+	COLOR: #003399;
+	BACKGROUND-COLOR: #93BEE2;
+	BORDER-BOTTOM: #93BEE2 1PX SOLID;
+	HEIGHT: 35;
+	CURSOR: HAND;
+}
+
+thead th
+{
+    background-color: #eee;
+    text-align: center;
+}
+
+th[scope="col"]
+{
+    padding-top: 16px;
+    background-image: url(images/metalbar.jpg);
+    background-repeat: no-repeat;
+    background-position: 50% 100%;
+    padding-bottom: 20px;
+    border: 0;
+}
+
+th[scope="row"]
+{
+    padding-left: 16px;
+    text-align: right;
+    font-style: italic;
+    background-image: url(arrow_right.gif);
+    background-repeat: no-repeat;
+    background-position: 100% 50%;
+    padding-right: 20px;
+    border: 0;
+}
+
+
+
+
+
+body {
+
+	font-family: Verdana ;
+
+	 font-size: 10pt ;
+
+	 line-height: 12pt ;
+
+	 color: black
+
+}
+
+
+
+h1 { font-family: Tahoma; font-size: 18pt }
+
+h2 { font-family: Tahoma; font-size: 14pt }
+
+h3 { font-family: Tahoma; font-size: 12pt }
+
+
+a:link { color : #4A71B5 }
+
+a:active { color : green }
+
+a:visited { color : #4A71B5 }
+
+a:hover { color : darkblue }
+
+.topbarlink {
+
+	COLOR: light green;
+
+	font-family: verdana;
+
+	font-size: 8pt;
+
+	font-weight: bold;
+
+	text-decoration: none;
+
+}
+
+
+
+a:link.topbarlink  {color : white; text-decoration: none;}
+
+a:visited.topbarlink  {color : white; text-decoration: none;}
+
+a:active.topbarlink  {color : lightgreen; text-decoration: none;}
+
+a:hover.topbarlink  {color : lightgreen; text-decoration: none}
+
+
+
+.st-theme-h1box {
+
+	text-indent : 0
+
+}
+
+
+
+.st-theme-h1 {
+
+	font-family: Tahoma; font-size: 24pt ; color: white 
+
+}
+
+
+
+.mt-title
+
+{
+
+font-family: tahoma ;
+
+font-size: large ;
+
+}
+
+
+
+.mt-menu 
+
+{ border:2px outset #008000; background-color:#008000 }
+
+.mt-mitem
+
+{
+
+	cursor: hand; 
+
+	color: white ;
+
+	background-color: green ;
+
+	border: 1px none ;
+
+	cellspacing: 1 ;
+
+	border-collapse: collapse 
+
+}
+
+.mt-mitem-roll
+
+{
+
+	cursor: hand ;
+
+	color: white ;
+
+	font-style: italic ;
+
+}
+
+.mt-featurechart
+
+{
+	padding-top: 10px ;
+	margin: 10px ;
+}
+
+.mt-fc-desc-dud
+
+{
+
+	font-weight: bold ;
+
+	border-right-style: solid; border-right-width: 1; 
+
+	cellspacing: 1 ;
+
+	border-collapse: collapse 
+
+}
+
+.mt-fc-desc
+
+{
+
+	font-weight: bold ;
+
+	border-right-style: solid; border-right-width: 1; 
+
+	cursor: hand ;
+
+	cellspacing: 1 ;
+
+	border-collapse: collapse 
+
+}
+
+.mt-fc-desc-roll
+
+{
+
+	font-weight: bold ;
+
+	border-right-style: solid; border-right-width: 1; 
+
+	cursor: hand ;
+
+	cellspacing: 1 ;
+
+	background-color: #CCFFCC ;
+
+}
+
+
+
+.mt-fc-weblet
+
+{
+
+	border-right-style: solid; border-right-width: 1; 
+
+}
+
+.mt-fc-web
+
+{
+
+	border-right-style: solid; border-right-width: 1; 
+
+
+
+}
+
+.mt-fc-megaweb
+
+{
+
+
+
+}
+
+.mt-fc-section
+
+{
+height: 39px ;
+
+color: black ;
+
+background-image: url(../images/metalbar.jpg);
+
+font-size: medium ;
+
+}
+
+.mt-greenrow
+
+{
+
+	background-color: #CCFFCC ;
+
+}
+
+.mt-bluecell
+
+{
+border-left-width: 1; border-right-style: solid; border-right-width: 1; 
+
+               border-top-width: 1; border-bottom-width: 1}
+
+.mt-titlebox
+{
+border-bottom-width: 1; border-bottom-style: solid; }			   
+
+.mt-adbar
+{
+border-top-width: 1; border-top-style: solid;
+border-bottom-width: 1; border-bottom-style: solid;
+border-left-width: 1; border-left-style: solid;
+border-right-width: 1; border-right-style: solid;
+ }
+ 
+ .mt-footer
+
+{
+
+	cursor: hand; 
+
+	color: white ;
+
+	background-color: black ;
+
+	border: 1px none ;
+
+	cellspacing: 1 ;
+
+	border-collapse: collapse 
+
+}
+
+.mt-form
+
+{
+	height: 39px ;
+
+	color: black ;
+
+	font-family: verdana;
+
+	font-size: 10pt;
+
+	font-weight: bold;
+
+	text-decoration: none;
+}
+
+.mt-table
+
+{
+
+	color: black ;
+
+	background-color: white ;
+
+	border: 1px none ;
+
+	cellspacing: 1 ;
+
+	border-collapse: collapse 
+
+}
+
+.mt-page-table
+
+{
+
+	border-right-style: solid; 
+	border-right-width: 2; 
+	border-right-color: black ;
+	border-collapse: collapse 
+
+}
+
+.mt-picture-description
+{
+	color: black ;
+
+	font-family: verdana;
+
+	font-size: 10pt;
+
+	text-decoration: none;
+}

@@ -1,0 +1,56 @@
+material VrAvatar/mat_1_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.1654902 0.1654902 0.1654902
+    diffuse 0.4964706 0.4964706 0.4964706
+    specular 0.413725525140762 0.413725525140762 0.413725525140762 50
+    emissive 0.1654902 0.1654902 0.1654902
+}
+}
+}
+
+material VrAvatar/mat_3_0
+{
+technique 
+{
+pass 
+{
+    ambient 0 0 0
+    diffuse 0 0 0
+    specular 0 0 0 50
+    emissive 0 0 0
+}
+}
+}
+
+material VrAvatar/mat_4_0
+{
+technique 
+{
+pass 
+{
+    ambient 0 0 0
+    diffuse 0 0 0
+    specular 0 0 0 50
+    emissive 0 0 0
+}
+}
+}
+
+material VrAvatar/mat_8_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.1803922 0.1819608 0.1960784
+    diffuse 0.5411765 0.5458823 0.5882353
+    specular 0.450980424880981 0.454901993274689 0.490196108818054 50
+    emissive 0.1803922 0.1819608 0.1960784
+}
+}
+}
+

@@ -1,0 +1,55 @@
+;
+; External State Manipulation
+;
+
+(state Present
+	(topic Kurt
+		(type person)
+	)
+	(topic Place-1
+		(type place)
+	)	
+	(topic Place-2
+		(type place)
+	)	
+)
+
+(state State-101
+	(topic Kurt
+		(type person)
+		(at Place-1)		
+	)
+)
+(state State-102
+	(topic Kurt
+		(type person)
+		(at Place-2)		
+	)
+)
+
+(state Kurt
+	(time always)
+	(topic Kurt
+		(type person)
+		(hair-color brown)
+	)
+)
+(state Kurt/Now
+	(time now)
+	(topic Kurt
+		(at Place-2)		
+	)
+)
+(state Kurt/Mad
+	(time sometimes)
+	(topic Kurt
+		(is mad)
+        (face-color red)
+	)
+)
+(state Place-2
+	(time always)
+	(topic Place-2
+		(type place)
+	)
+)

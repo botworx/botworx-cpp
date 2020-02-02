@@ -1,0 +1,56 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BuggyBotsWx", "BuggyBotsWx.vcproj", "{142B85BB-8F42-4435-91F2-C1C046CCB765}"
+	ProjectSection(ProjectDependencies) = postProject
+		{79F5D09F-F71A-4E1A-8C48-40385A59B877} = {79F5D09F-F71A-4E1A-8C48-40385A59B877}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BwVrWx", "..\..\BwVrWx\BwVrWx.vcproj", "{79F5D09F-F71A-4E1A-8C48-40385A59B877}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BuggyBotsMain", "..\BuggyBotsMain\BuggyBotsMain.vcproj", "{BCA330C4-9739-4595-8A60-9B03FEC75A17}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BwVr", "..\..\BwVr\BwVr.vcproj", "{76CCDFF0-2B1A-464D-9311-23E545EC251E}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BwKernel", "..\..\BwKernel\BwKernel.vcproj", "{F9CEAF2F-C821-4D63-A726-99378308D5C0}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{142B85BB-8F42-4435-91F2-C1C046CCB765}.Debug.ActiveCfg = Debug|Win32
+		{142B85BB-8F42-4435-91F2-C1C046CCB765}.Debug.Build.0 = Debug|Win32
+		{142B85BB-8F42-4435-91F2-C1C046CCB765}.Release.ActiveCfg = Release|Win32
+		{142B85BB-8F42-4435-91F2-C1C046CCB765}.Release.Build.0 = Release|Win32
+		{79F5D09F-F71A-4E1A-8C48-40385A59B877}.Debug.ActiveCfg = Debug|Win32
+		{79F5D09F-F71A-4E1A-8C48-40385A59B877}.Debug.Build.0 = Debug|Win32
+		{79F5D09F-F71A-4E1A-8C48-40385A59B877}.Release.ActiveCfg = Release|Win32
+		{79F5D09F-F71A-4E1A-8C48-40385A59B877}.Release.Build.0 = Release|Win32
+		{BCA330C4-9739-4595-8A60-9B03FEC75A17}.Debug.ActiveCfg = Debug|Win32
+		{BCA330C4-9739-4595-8A60-9B03FEC75A17}.Debug.Build.0 = Debug|Win32
+		{BCA330C4-9739-4595-8A60-9B03FEC75A17}.Release.ActiveCfg = Release|Win32
+		{BCA330C4-9739-4595-8A60-9B03FEC75A17}.Release.Build.0 = Release|Win32
+		{76CCDFF0-2B1A-464D-9311-23E545EC251E}.Debug.ActiveCfg = Debug|Win32
+		{76CCDFF0-2B1A-464D-9311-23E545EC251E}.Debug.Build.0 = Debug|Win32
+		{76CCDFF0-2B1A-464D-9311-23E545EC251E}.Release.ActiveCfg = Release|Win32
+		{76CCDFF0-2B1A-464D-9311-23E545EC251E}.Release.Build.0 = Release|Win32
+		{F9CEAF2F-C821-4D63-A726-99378308D5C0}.Debug.ActiveCfg = Debug|Win32
+		{F9CEAF2F-C821-4D63-A726-99378308D5C0}.Debug.Build.0 = Debug|Win32
+		{F9CEAF2F-C821-4D63-A726-99378308D5C0}.Release.ActiveCfg = Release|Win32
+		{F9CEAF2F-C821-4D63-A726-99378308D5C0}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

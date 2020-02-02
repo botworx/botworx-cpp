@@ -1,0 +1,43 @@
+(and t nil t)
+t
+nil
+
+1
+5.75
+-1
+-5.75
+(+ 2 3)
+
+(set 'x 10)
+(set 'y 10)
+(set 'z 10)
+
+(quote (x y))
+(quote x)
+(car(quote(x y z)))
+(cons(cons 'a 'b)(cons 'c 'd))
+(cdr(quote(x y z)))
+(car(cdr(quote(x y z))))
+(cons 'x 'y)
+(car (quote (x y) ) )
+(defun cadr (x) (car(cdr x)) )
+(cadr '(x y z))
+
+
+(defun append (x y)
+   (cond ((null x) y)
+         (t (cons (car x) (append (cdr x) y)))
+   ) )
+
+(defun member (a lat)
+   (cond ((null lat) nil)
+         ((eq (car lat) a) lat)
+         (t (member a (cdr lat)))
+   ) )
+(defun eqn (n1 n2)
+   (cond ((zerop n2) (zerop n1))
+         ((zerop n1) nil)
+         (t (eqn (sub1 n1) (sub1 n2)))
+   ) )
+
+(defun countdown(x) (while(/= x 0)(set 'x(sub1 x))) )

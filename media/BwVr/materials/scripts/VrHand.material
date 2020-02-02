@@ -1,0 +1,18 @@
+material VrHand/mat_9_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.1803922 0.1819608 0.1960784
+    diffuse 0.5411766 0.5458824 0.5882354
+    specular 0.450980424880981 0.454901993274689 0.490196108818054 50
+    emissive 0.1803922 0.1819608 0.1960784
+    texture_unit 
+    {
+        texture VrHand.PNG
+    }
+}
+}
+}
+

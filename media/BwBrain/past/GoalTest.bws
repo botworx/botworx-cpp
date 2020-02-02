@@ -1,0 +1,56 @@
+namespace GoalTestNamespace
+
+using System
+using System.Collections.Generic
+using System.Text
+using System.IO
+
+using BwBrain.Runtime
+using BwBrain.Runtime.Tasks
+
+predicate hunger(int)
+predicate name(string)
+predicate speed(double)
+
+expert GoalTest
+    creator Main(goal-test)
+        {Console.WriteLine("Goal Test");}
+        apple1 type food
+        self bored true
+        self hunger 20
+
+    goal IdleGoal(idle)
+        creator Main(self bored true)
+        
+    method Idle(idle)
+        {Console.WriteLine("Idle");}
+        
+    goal SatisfyHungerGoal(satisfy-hunger)
+        creator Main(self hunger $h)
+            precondition
+                {h > 10}
+                
+        relator conflict IdleConflict(idle)
+
+    method SatisfyHunger(satisfy-hunger)
+        #choose-food :out $f
+        #eat $f
+        eat apple1
+
+    goal EatGoal(eat $f)
+        creator Main(perceive $f)
+            precondition
+                $f type food
+                self hunger $h
+                {h > 10}
+                
+        relator conflict IdleConflict(idle)
+        
+    method Eat(eat $f)
+        goto $f
+        animate :name "Eating" :speed 1.0 :loop false
+        
+    #operator ChooseFood(choose-food)
+        #return apple
+
+goal-test

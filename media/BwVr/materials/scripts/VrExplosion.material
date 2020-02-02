@@ -1,0 +1,16 @@
+material VrExplosion/mat_1_0
+{
+technique
+{
+pass 
+{
+scene_blend add
+depth_write off
+    ambient 7.843138E-02 0.1168628 0.1858824
+    diffuse 0.2352941 0.3505882 0.557647
+    specular 0.196078449487686 0.292156875133514 0.464705914258957 50
+    emissive 7.843138E-02 0.1168628 0.1858824
+}
+}
+}
+

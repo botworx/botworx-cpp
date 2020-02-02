@@ -1,0 +1,18 @@
+material VrTetrahedron/mat_1_0
+{
+technique 
+{
+pass 
+{
+    ambient 0.2 0.2 0.2
+    diffuse 0.8 0.8 0.8
+    specular 0.85 0.85 0.85 85
+    emissive 0.2 0.2 0.2
+    texture_unit 
+    {
+        texture VrMetalBox.PNG
+    }
+}
+}
+}
+
